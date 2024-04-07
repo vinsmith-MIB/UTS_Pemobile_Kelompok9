@@ -1,14 +1,13 @@
 // Import paket yang diperlukan
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:quizz/controller/naviagation_questions_model.dart';
 import 'package:quizz/credit/pages/main_page.dart';
 import 'package:quizz/views/quiz_screen.dart';
 
 // Kelas HomePage
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -148,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 cursorColor: Colors.white,
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               // Tombol untuk memulai kuis
                               ElevatedButton(
                                   onPressed: () {
