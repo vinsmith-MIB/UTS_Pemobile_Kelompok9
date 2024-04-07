@@ -1,12 +1,14 @@
 // Import paket yang diperlukan
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:quizz/controller/naviagation_questions_model.dart';
+import 'package:quizz/credit/pages/main_page.dart';
 import 'package:quizz/views/quiz_screen.dart';
 
 // Kelas HomePage
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -146,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 cursorColor: Colors.white,
                               ),
+                              SizedBox(height: 20,),
                               // Tombol untuk memulai kuis
                               ElevatedButton(
                                   onPressed: () {
@@ -158,24 +161,24 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     );
                                   },
-                                  child: const Text("Start Question"))
+                                  
+                                  child: const Text("Start Question")),
+                              // Spacer untuk memberikan sedikit ruang antara tombol
+                              const SizedBox(height: 20),
+                              // Tombol "Hubungi Kami"
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CreditMainPage()));
+                                },
+                                child: const Text("Hubungi Kami"),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              ),
-            ),
-            // Tombol "Hubungi Kami"
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Tambahkan fungsi untuk menangani aksi ketika tombol "Hubungi Kami" ditekan
-                },
-                child: const Text("Hubungi Kami"),
               ),
             ),
           ],
