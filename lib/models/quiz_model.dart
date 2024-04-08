@@ -1,11 +1,10 @@
 class QuizModel {
-  int id;
-  String text;
-  String pathAsset;
-  List<OptionsModel> options;
-  bool isLocked;
-  OptionsModel? selectedWiidgetOption;
-  
+  int id; // ID dari kuis
+  String text; // Teks dari kuis
+  String pathAsset; // Path menuju asset terkait kuis
+  List<OptionsModel> options; // Daftar opsi untuk kuis
+  bool isLocked; // Menandakan apakah kuis terkunci atau tidak
+  OptionsModel? selectedWiidgetOption; // Opsi yang dipilih oleh pengguna
 
   QuizModel({
     required this.id,
@@ -18,8 +17,8 @@ class QuizModel {
 }
 
 class OptionsModel {
-  final String text;
-  final bool isCorrect;
+  final String text; // Teks dari opsi
+  final bool isCorrect; // Menandakan apakah opsi tersebut benar atau salah
 
   const OptionsModel({
     required this.text,

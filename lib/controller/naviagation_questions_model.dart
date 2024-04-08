@@ -1,7 +1,7 @@
 import 'dart:math';
-
 import 'package:quizz/models/quiz_model.dart';
 
+// Kelas abstrak untuk mengontrol kuis
 abstract class QuizController {
   List<QuizModel> _quizzes = []; // List untuk menyimpan objek-objek QuizModel
 
@@ -13,6 +13,7 @@ abstract class QuizController {
     _quizzes = value;
   }
 
+  // Metode untuk menghapus semua kuis dari daftar
   void delete() {
     _quizzes.clear();
   }
@@ -29,37 +30,42 @@ abstract class QuizController {
     }
   }
 
-   Map<dynamic, dynamic> getRandomQuestionsAndOptions();
+  // Metode abstrak untuk mendapatkan pertanyaan dan opsi acak
+  Map<dynamic, dynamic> getRandomQuestionsAndOptions();
 }
 
+// Kelas untuk mengelola QuizController
 class QuizControllerManager extends QuizController {
   
+  // Mengimplementasikan metode abstrak untuk mendapatkan pertanyaan dan opsi acak
   @override
   Map<dynamic, dynamic> getRandomQuestionsAndOptions() {
-  var count = totalQuizzes;
-  final randomQuestions = <dynamic>[];
-  final randomOptions = <dynamic>[];
-  final random = Random();
+    var count = totalQuizzes;
+    final randomQuestions = <dynamic>[];
+    final randomOptions = <dynamic>[];
+    final random = Random();
 
-  // Jika jumlah pertanyaan melebihi total pertanyaan yang tersedia
-  if (count >= _quizzes.length) {
-    count = _quizzes.length;
-  }
-
-  // Memilih pertanyaan secara acak
-  while (randomQuestions.length < count) {
-    final randomIndex = random.nextInt(_quizzes.length);
-    final selectedQuestion = _quizzes[randomIndex];
-
-    if (!randomQuestions.contains(selectedQuestion)) {
-      randomQuestions.add(selectedQuestion);
-      randomOptions.add(selectedQuestion.options);
+    // Jika jumlah pertanyaan melebihi total pertanyaan yang tersedia
+    if (count >= _quizzes.length) {
+      count = _quizzes.length;
     }
-  }
 
-  return Map.fromIterables(randomQuestions, randomOptions);
+    // Memilih pertanyaan secara acak
+    while (randomQuestions.length < count) {
+      final randomIndex = random.nextInt(_quizzes.length);
+      final selectedQuestion = _quizzes[randomIndex];
+
+      if (!randomQuestions.contains(selectedQuestion)) {
+        randomQuestions.add(selectedQuestion);
+        randomOptions.add(selectedQuestion.options);
+      }
+    }
+
+    return Map.fromIterables(randomQuestions, randomOptions);
+  }
 }
-}
+
+
 
 // Setter untuk mengisi data ke dalam QuizController
 void setData(QuizController quizController) {
@@ -67,6 +73,7 @@ void setData(QuizController quizController) {
 
   // Pertanyaan 1
   List<OptionsModel> options1 = [
+     // Opsi jawaban untuk pertanyaan 1
     const OptionsModel(
         text: "Hafizhuddin Zul Fahmi, S.Kom., M.Sc.", isCorrect: false),
     const OptionsModel(
@@ -87,7 +94,7 @@ void setData(QuizController quizController) {
   List<OptionsModel> options2 = [
     const OptionsModel(
         text: "Hafizhuddin Zul Fahmi, S.Kom., M.Sc.", isCorrect: false),
-    const OptionsModel(
+    const OptionsModel(  
         text: "Dodik Arwin Dermawan, S.ST., S.T., M.T", isCorrect: false),
     const OptionsModel(
         text: "I Gde Agung Sri Sidhimantra, S.Kom., M.Kom.", isCorrect: true),
