@@ -50,7 +50,7 @@ class _MyProgressIndicatorState extends State<MyProgressIndicator> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => QuizScreen(
-          questionlenght: widget.questionlenght,
+          question: widget.questionlenght,
           userName: widget.userName,
         ),
       ),

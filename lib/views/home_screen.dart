@@ -1,5 +1,4 @@
 // Import paket yang diperlukan
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:quizz/controller/naviagation_questions_model.dart';
 import 'package:quizz/credit/pages/main_page.dart';
@@ -15,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 // State untuk HomePage
 class _HomePageState extends State<HomePage> {
-  final QuizController quizController = QuizController(); // Inisialisasi QuizController
+  final QuizController quizController = QuizControllerManager(); // Inisialisasi QuizController
   final textFieldController = TextEditingController(); // Controller untuk TextField
   late String userName;
 
@@ -24,10 +23,7 @@ class _HomePageState extends State<HomePage> {
     setData(quizController); // Set data quiz
 
     // Mendapatkan pertanyaan acak
-    List<dynamic> randomQuestions = getRandomQuestionsAndOptions(
-      quizController.quizzes,
-      quizController.totalQuizzes,
-    ).keys.toList();
+    List<dynamic> randomQuestions = quizController.getRandomQuestionsAndOptions().keys.toList();
 
     // Warna latar belakang
     const Color bgColor = Color(0xFF4993FA);
@@ -154,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) => QuizScreen(
-                                          questionlenght: randomQuestions,
+                                          question: randomQuestions,
                                           userName: textFieldController.text,
                                         ),
                                       ),
@@ -187,30 +183,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// Fungsi untuk mendapatkan pertanyaan dan opsi secara acak
-Map<dynamic, dynamic> getRandomQuestionsAndOptions(
-  List<dynamic> allQuestions,
-  int count,
-) {
-  final randomQuestions = <dynamic>[];
-  final randomOptions = <dynamic>[];
-  final random = Random();
-
-  // Jika jumlah pertanyaan melebihi total pertanyaan yang tersedia
-  if (count >= allQuestions.length) {
-    count = allQuestions.length;
-  }
-
-  // Memilih pertanyaan secara acak
-  while (randomQuestions.length < count) {
-    final randomIndex = random.nextInt(allQuestions.length);
-    final selectedQuestion = allQuestions[randomIndex];
-
-    if (!randomQuestions.contains(selectedQuestion)) {
-      randomQuestions.add(selectedQuestion);
-      randomOptions.add(selectedQuestion.options);
-    }
-  }
-
-  return Map.fromIterables(randomQuestions, randomOptions);
-}

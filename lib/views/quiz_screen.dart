@@ -6,10 +6,10 @@ import 'package:flutter/material.dart'; // Import Flutter Material untuk UI
 
 // Kelas QuizScreen sebagai stateful widget
 class QuizScreen extends StatefulWidget {
-  final List<dynamic> questionlenght; // List pertanyaan
+  final List<dynamic> question; // List pertanyaan
   final dynamic userName; // Nama pengguna
   const QuizScreen(
-      {super.key, required this.questionlenght, required this.userName});
+      {super.key, required this.question, required this.userName});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState(); // Membuat state
@@ -48,7 +48,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   // Pindah ke layar baru
   void navigateToNewScreen() {
-    if (_questionNumber < widget.questionlenght.length) {
+    if (_questionNumber < widget.question.length) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOut,
@@ -66,7 +66,7 @@ class _QuizScreenState extends State<QuizScreen> {
         MaterialPageRoute(
           builder: (context) => ResultsScreen(
             score: score,
-            totalQuestions: widget.questionlenght.length,
+            totalQuestions: widget.question.length,
           ),
         ),
       );
@@ -177,7 +177,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Question $_questionNumber/${widget.questionlenght.length}",
+                            "Question $_questionNumber/${widget.question.length}",
                             style: TextStyle(
                                 fontSize: 16, color: Colors.grey.shade500),
                           ),
@@ -185,7 +185,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             child: PageView.builder(
                               controller: _controller,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: widget.questionlenght.length,
+                              itemCount: widget.question.length,
                               onPageChanged: (value) {
                                 setState(() {
                                   _questionNumber = value + 1;
@@ -195,7 +195,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               },
                               itemBuilder: (context, index) {
                                 final myquestions =
-                                    widget.questionlenght[index];
+                                    widget.question[index];
 
                                 return Column(
                                   children: [
@@ -334,7 +334,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   // Reset kunci pertanyaan
   void _resetQuestionLocks() {
-    for (var question in widget.questionlenght) {
+    for (var question in widget.question) {
       question.isLocked = false;
     }
     questionTimerSeconds = 20; // Reset timer
@@ -353,7 +353,7 @@ class _QuizScreenState extends State<QuizScreen> {
         elevation: MaterialStateProperty.all(4),
       ),
       onPressed: () {
-        if (_questionNumber < widget.questionlenght.length) {
+        if (_questionNumber < widget.question.length) {
           _controller.nextPage(
             duration: const Duration(milliseconds: 800),
             curve: Curves.easeInOut,
@@ -371,7 +371,7 @@ class _QuizScreenState extends State<QuizScreen> {
             MaterialPageRoute(
               builder: (context) => ResultsScreen(
                 score: score,
-                totalQuestions: widget.questionlenght.length,
+                totalQuestions: widget.question.length,
                 userName: widget.userName
               ),
             ),
@@ -379,7 +379,7 @@ class _QuizScreenState extends State<QuizScreen> {
         }
       },
       child: Text(
-        _questionNumber < widget.questionlenght.length
+        _questionNumber < widget.question.length
             ? 'Next Question'
             : 'Result',
         style: Theme.of(context).textTheme.bodySmall!.copyWith(

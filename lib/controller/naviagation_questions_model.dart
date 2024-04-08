@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:quizz/models/quiz_model.dart';
 
-class QuizController {
+abstract class QuizController {
   List<QuizModel> _quizzes = []; // List untuk menyimpan objek-objek QuizModel
 
   // Getter untuk mendapatkan daftar quizzes
@@ -26,6 +28,37 @@ class QuizController {
       throw Exception('Index out of bounds');
     }
   }
+
+   Map<dynamic, dynamic> getRandomQuestionsAndOptions();
+}
+
+class QuizControllerManager extends QuizController {
+  
+  @override
+  Map<dynamic, dynamic> getRandomQuestionsAndOptions() {
+  var count = totalQuizzes;
+  final randomQuestions = <dynamic>[];
+  final randomOptions = <dynamic>[];
+  final random = Random();
+
+  // Jika jumlah pertanyaan melebihi total pertanyaan yang tersedia
+  if (count >= _quizzes.length) {
+    count = _quizzes.length;
+  }
+
+  // Memilih pertanyaan secara acak
+  while (randomQuestions.length < count) {
+    final randomIndex = random.nextInt(_quizzes.length);
+    final selectedQuestion = _quizzes[randomIndex];
+
+    if (!randomQuestions.contains(selectedQuestion)) {
+      randomQuestions.add(selectedQuestion);
+      randomOptions.add(selectedQuestion.options);
+    }
+  }
+
+  return Map.fromIterables(randomQuestions, randomOptions);
+}
 }
 
 // Setter untuk mengisi data ke dalam QuizController
